@@ -1,3 +1,4 @@
+#[derive(Debug, Default)]
 pub struct Pager {
     file_desc: i32,
     file_len: u32,

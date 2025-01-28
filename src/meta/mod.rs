@@ -1,4 +1,5 @@
-use crate::{buffer::InputBuffer, table::Table};
+use crate::buffer::*;
+use crate::table::*;
 
 pub enum MetaCommandResult {
     Success,

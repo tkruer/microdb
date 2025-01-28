@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct InputBuffer {
     pub buffer: String,
     pub buffer_len: usize,
@@ -9,7 +9,7 @@ pub struct InputBuffer {
 }
 
 impl InputBuffer {
-    fn new() -> Self {
+    pub fn new() -> Self {
         InputBuffer {
             buffer: String::new(),
             buffer_len: 0,
@@ -17,7 +17,7 @@ impl InputBuffer {
         }
     }
 
-    fn read_input(&mut self) {
+    pub fn read_input(&mut self) {
         self.buffer.clear();
         io::stdout().flush().unwrap();
 

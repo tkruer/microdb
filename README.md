@@ -1,11 +1,11 @@
 # microdb - yet another tiny SQLlite-like database
 
-a tiny SQLite-like database built in Rust. this project is meant for learning and understanding database internals. best way to learn anything is by doing.
+a tiny SQLite-like database built in Rust. this project is meant for learning and understanding database internals. __best way to learn anything is by doing__.
 
 ## Prerequisites
 
-- Rust 1.XX or newer (you can install Rust via [rustup](https://rustup.rs/))
-- Cargo (rust's build system and package manager)
+- Rust 1.8X or newer (you can install Rust via [rustup](https://rustup.rs/))
+- Cargo (theres zero dependencies)
 
 ## Getting Started
 

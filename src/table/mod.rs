@@ -1,4 +1,4 @@
-use crate::pager::Pager;
+use crate::{cursor::Cursor, pager::Pager};
 
 pub struct Table {
     pager: Box<Pager>,
@@ -26,7 +26,7 @@ impl Table {
         println!("Closing database...");
     }
 
-    fn get_page(&self, _page_num: u32) -> *mut u8 {
+    pub fn get_page(&self, _page_num: u32) -> *mut u8 {
         std::ptr::null_mut()
     }
 
@@ -36,5 +36,21 @@ impl Table {
 
     fn set_node_root(&self, _root_node: *mut u8, is_root: bool) {
         println!("Setting node root status to: {}", is_root);
+    }
+
+    pub fn find(&self, _key: i32) -> Option<Cursor> {
+        Some(Cursor {
+            page_num: 0,
+            cell_num: 0,
+            end_of_table: false,
+        })
+    }
+
+    pub fn start(&self) -> Cursor {
+        Cursor {
+            page_num: 0,
+            cell_num: 0,
+            end_of_table: false,
+        }
     }
 }
