@@ -1,4 +1,4 @@
-use crate::buffer::InputBuffer;
+use crate::{buffer::InputBuffer, table::Table};
 
 pub enum MetaCommandResult {
     Success,
@@ -22,4 +22,14 @@ pub fn do_meta_command(input_buffer: &InputBuffer, table: &Table) -> MetaCommand
         }
         _ => MetaCommandResult::UnrecognizedCommand,
     }
+}
+
+fn print_tree(_pager: &str, _level: u32, _depth: u32) {
+    println!("Tree:");
+    // Add actual tree-printing logic
+}
+
+fn print_constants() {
+    println!("Constants:");
+    // Add actual constants printing logic
 }
