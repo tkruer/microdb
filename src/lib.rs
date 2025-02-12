@@ -1,20 +1,11 @@
-pub mod btree;
 pub mod buffer;
-pub mod constants;
-pub mod cursor;
-pub mod engine;
-pub mod meta;
-pub mod node;
-pub mod pager;
-pub mod serializer;
-pub mod table;
-pub mod util;
+pub mod db;
 
-use crate::buffer::*;
-use crate::engine::*;
-use crate::meta::*;
-use crate::table::*;
-use crate::util::*;
+use buffer::Buffer;
+use db::{
+    db_open, execute_statement, prepare_statement, ExecuteResult, MetaCommandResult, PrepareResult,
+    Statement, StatementType, Table,
+};
 
 /// The MicroDB builder.
 #[derive(Clone, Debug, Default)]
@@ -34,65 +25,69 @@ impl MicroDB {
             eprintln!("[ERROR]: Did not supply a database name");
             std::process::exit(1);
         }
-        let file_name = args[1].clone();
-        let table = Table::open(&file_name);
-        let engine = Engine::default();
-        Database { table, engine }
+        Database
     }
 }
 
 /// The database that holds our table and engine.
-pub struct Database {
-    pub table: Table,
-    pub engine: Engine,
-}
+#[derive(Clone, Debug, Default)]
+pub struct Database;
 
 impl Database {
     /// Run the interactive loop.
     pub fn run(&mut self) {
-        let mut input_buffer = InputBuffer::new();
+        // Create a new table and input buffer.
+        if std::env::args().len() < 2 {
+            println!("Must supply a database filename.");
+            std::process::exit(1);
+        }
+        let filename = std::env::args().nth(1).unwrap();
+        let mut table = db_open(&filename);
+        let mut buffer = Buffer::new();
 
         loop {
-            prompt();
-            input_buffer.read_input();
+            Buffer::print_prompt();
+            buffer.read_input();
 
-            if input_buffer.buffer.starts_with('.') {
-                match do_meta_command(&input_buffer, &mut self.table) {
+            if buffer.buffer.starts_with('.') {
+                match buffer.do_meta_command(&mut table) {
                     MetaCommandResult::Success => continue,
                     MetaCommandResult::UnrecognizedCommand => {
-                        eprintln!("Unrecognized command '{}'", input_buffer.buffer);
+                        println!("Unrecognized command '{}'", buffer.buffer);
                         continue;
                     }
                 }
             }
 
-            let mut statement: Statement = Statement::default();
+            let mut statement = Statement {
+                statement_type: StatementType::Select, // default value
+                row_to_insert: None,
+            };
 
-            match prepare_statement(&input_buffer, &mut statement) {
-                PrepareResult::Success => {}
+            match prepare_statement(&buffer.buffer, &mut statement) {
+                PrepareResult::Success => { /* proceed */ }
                 PrepareResult::NegativeId => {
-                    eprintln!("ID must be positive.");
+                    println!("ID must be positive.");
                     continue;
                 }
                 PrepareResult::StringTooLong => {
-                    eprintln!("String is too long.");
+                    println!("String is too long.");
                     continue;
                 }
                 PrepareResult::SyntaxError => {
-                    eprintln!("Syntax error. Could not parse statement.");
+                    println!("Syntax error. Could not parse statement.");
                     continue;
                 }
                 PrepareResult::UnrecognizedStatement => {
-                    eprintln!(
-                        "Unrecognized keyword at start of '{}'.",
-                        input_buffer.buffer
-                    );
+                    println!("Unrecognized keyword at start of '{}'.", buffer.buffer);
                     continue;
                 }
             }
-            match self.engine.execute_statement(&statement, &mut self.table) {
+
+            match execute_statement(&statement, &mut table) {
                 ExecuteResult::Success => println!("Executed."),
-                ExecuteResult::DuplicateKey => eprintln!("Error: Duplicate key."),
+                ExecuteResult::TableFull => println!("Error: Table full."),
+                ExecuteResult::DuplicateKey => println!("Error: Duplicate key."),
             }
         }
     }
