@@ -1,0 +1,3 @@
+insert 1 user1 email1
+select
+.exit
