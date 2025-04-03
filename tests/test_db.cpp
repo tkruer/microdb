@@ -10,9 +10,7 @@
 #include <string>
 #include <vector>
 
-// Helper: runs "./db test.db" with input from a temporary file
 std::vector<std::string> run_script(const std::vector<std::string> &commands) {
-  // Write commands to a temporary file.
   const std::string temp_file = "temp_test_input.txt";
   {
     std::ofstream ofs(temp_file);
@@ -23,7 +21,6 @@ std::vector<std::string> run_script(const std::vector<std::string> &commands) {
       ofs << cmd << "\n";
     }
   }
-  // Build command: run our binary "db" with the test database filename
   std::string cmd = "./db test.db < " + temp_file;
 
   std::array<char, 128> buffer;
@@ -36,10 +33,8 @@ std::vector<std::string> run_script(const std::vector<std::string> &commands) {
     result += buffer.data();
   }
   pclose(pipe);
-  // Clean up temporary file.
   std::remove(temp_file.c_str());
 
-  // Split the output into lines.
   std::istringstream iss(result);
   std::vector<std::string> lines;
   std::string line;
@@ -49,7 +44,6 @@ std::vector<std::string> run_script(const std::vector<std::string> &commands) {
   return lines;
 }
 
-// Remove any existing test database file before each test.
 void remove_test_db() { std::remove("test.db"); }
 
 TEST_CASE("inserts and retrieves a row", "[database]") {
@@ -59,8 +53,6 @@ TEST_CASE("inserts and retrieves a row", "[database]") {
       "select",
       ".exit",
   });
-  // Expected output may vary slightly depending on prompt behavior.
-  // Here we assume the following output (adjust as needed).
   std::vector<std::string> expected = {"db > Executed.",
                                        "db > (1, user1, person1@example.com)",
                                        "Executed.", "db > "};
