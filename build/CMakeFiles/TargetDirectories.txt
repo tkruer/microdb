@@ -1,8 +1,0 @@
-/Users/tylerkruer/code/microdb/build/CMakeFiles/db.dir
-/Users/tylerkruer/code/microdb/build/CMakeFiles/tests.dir
-/Users/tylerkruer/code/microdb/build/CMakeFiles/test.dir
-/Users/tylerkruer/code/microdb/build/CMakeFiles/edit_cache.dir
-/Users/tylerkruer/code/microdb/build/CMakeFiles/rebuild_cache.dir
-/Users/tylerkruer/code/microdb/build/_deps/catch2-build/CMakeFiles/test.dir
-/Users/tylerkruer/code/microdb/build/_deps/catch2-build/CMakeFiles/edit_cache.dir
-/Users/tylerkruer/code/microdb/build/_deps/catch2-build/CMakeFiles/rebuild_cache.dir
