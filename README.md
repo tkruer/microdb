@@ -44,8 +44,8 @@ To build the project on macOS (or any system with CMake):
 `cmake --build .`
 
 This will generate two executables:
- • db — The main MicroDB database binary.
- • tests — The test executable for running automated tests.
+- db — The main MicroDB database binary.
+- tests — The test executable for running automated tests.
 
 Running the Database
 
@@ -54,15 +54,15 @@ To run the database interactively, execute the db binary with a database filenam
 `./db mydatabase.db`
 
 At the db > prompt you can type commands such as:
- • Insert a row:
+- Insert a row:
 
 `insert 1 user1 <person1@example.com>`
 
- • Retrieve all rows:
+- Retrieve all rows:
 
 `select`
 
- • Other meta-commands:
+- Other meta-commands:
 
 `.btree`
 `.constants`
