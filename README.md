@@ -1,33 +1,105 @@
 # microdb - yet another tiny SQLlite-like database
 
-a tiny SQLite-like database built in Rust. this project is meant for learning and understanding database internals. __best way to learn anything is by doing__.
+MicroDB is a lightweight, simple database implemented in C++ that supports basic SQL commands such as `insert` and `select`. It uses a basic B-Tree structure for data storage and is designed as a learning project to explore file I/O, memory management, and tree-based data structures.
 
-## Prerequisites
+## Project Structure
 
-- Rust 1.8X or newer (you can install Rust via [rustup](https://rustup.rs/))
-- Cargo (theres zero dependencies)
+.
+├── CMakeLists.txt         # CMake configuration file to build the project and tests.
+├── LICENSE                # License file.
+├── README.md              # This file.
+├── build                  # Directory created during the build process.
+├── docs                   # Documentation files.
+├── src
+│   └── main.cpp           # Main source code for the MicroDB executable.
+└── tests
+├── test_db.cpp        # Integration tests using Catch2.
+└── test_input.txt     # (Optional) Additional test input file.
 
-## Getting Started
+## Features
 
-1. clone this repository:
+- **Basic SQL Commands:**  
+  - `insert <id> <username> <email>`  
+  - `select`
+
+- **Meta-commands:**  
+  - `.exit` to close the database.  
+  - `.btree` to print the current B-Tree structure.  
+  - `.constants` to print configuration constants.
+
+- **Persistent Storage:**  
+  Data is stored in a file, and the database retains data between sessions.
+
+## Dependencies
+
+- **C++11 or higher**
+- **CMake (minimum version 3.10)**
+- **POSIX Libraries:** Used for file I/O and other system operations.
+- **Catch2:** A header-only C++ testing framework (fetched automatically by CMake).
+
+## Building the Project
+
+To build the project on macOS (or any system with CMake):
+
+1. Open a terminal in the repository's root directory.
+2. Create and enter a build directory:
 
    ```bash
-   git clone https://github.com/tkruer/microdb.git
-   cd microdb
-   ```
+   mkdir build
+   cd build
 
-2. build the project:
 
-   ```bash
-   cargo build
-   ```
+3. Configure the project with CMake:
 
-3. run the project (example):
+cmake ..
 
-   ```bash
-   cargo run your_database_file.db
-   ```
+ 4. Build the project:
 
-## License
+cmake --build .
 
-this project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This will generate two executables:
+ • db — The main MicroDB database binary.
+ • tests — The test executable for running automated tests.
+
+Running the Database
+
+To run the database interactively, execute the db binary with a database filename as an argument:
+
+./db mydatabase.db
+
+At the db > prompt you can type commands such as:
+ • Insert a row:
+
+insert 1 user1 <person1@example.com>
+
+ • Retrieve all rows:
+
+select
+
+ • Other meta-commands:
+
+.btree
+.constants
+.exit
+
+Running the Tests
+
+The project uses Catch2 for automated testing. You can run the tests in one of two ways:
+
+Using the Test Executable
+
+From the build directory, run:
+
+./tests
+
+Using CTest
+
+From the build directory, run:
+
+ctest
+
+The tests simulate user input by writing commands to a temporary file and piping that input to the db binary. The output is then checked against expected values.
+
+Acknowledgments
+
+This project is inspired by various educational resources on building simple databases. It serves as a hands-on exploration of low-level file and memory management, as well as tree data structures.
