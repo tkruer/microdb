@@ -1,20 +1,6 @@
 # microdb - yet another tiny SQLlite-like database
 
-MicroDB is a lightweight, simple database implemented in C++ that supports basic SQL commands such as `insert` and `select`. It uses a basic B-Tree structure for data storage and is designed as a learning project to explore file I/O, memory management, and tree-based data structures.
-
-## Project Structure
-
-.
-├── CMakeLists.txt         # CMake configuration file to build the project and tests.
-├── LICENSE                # License file.
-├── README.md              # This file.
-├── build                  # Directory created during the build process.
-├── docs                   # Documentation files.
-├── src
-│   └── main.cpp           # Main source code for the MicroDB executable.
-└── tests
-├── test_db.cpp        # Integration tests using Catch2.
-└── test_input.txt     # (Optional) Additional test input file.
+MicroDB is a simple database implemented in C++ that supports basic SQL commands such as `insert` and `select`. It uses a basic B-Tree structure for data storage and is designed as a learning project to explore file I/O, memory management, and tree-based data structures. Best way to learn anything is by doing.
 
 ## Features
 
@@ -44,18 +30,18 @@ To build the project on macOS (or any system with CMake):
 1. Open a terminal in the repository's root directory.
 2. Create and enter a build directory:
 
-   ```bash
-   mkdir build
-   cd build
-
+ ```bash
+ mkdir build
+ cd build
+```
 
 3. Configure the project with CMake:
 
-cmake ..
+`cmake ..`
 
  4. Build the project:
 
-cmake --build .
+`cmake --build .`
 
 This will generate two executables:
  • db — The main MicroDB database binary.
@@ -65,41 +51,39 @@ Running the Database
 
 To run the database interactively, execute the db binary with a database filename as an argument:
 
-./db mydatabase.db
+`./db mydatabase.db`
 
 At the db > prompt you can type commands such as:
  • Insert a row:
 
-insert 1 user1 <person1@example.com>
+`insert 1 user1 <person1@example.com>`
 
  • Retrieve all rows:
 
-select
+`select`
 
  • Other meta-commands:
 
-.btree
-.constants
-.exit
+`.btree`
+`.constants`
+`.exit`
 
 Running the Tests
 
 The project uses Catch2 for automated testing. You can run the tests in one of two ways:
 
-Using the Test Executable
+Using the Test Executable (easiest)
 
 From the build directory, run:
 
-./tests
+`./tests`
 
 Using CTest
 
 From the build directory, run:
 
-ctest
+`ctest`
 
 The tests simulate user input by writing commands to a temporary file and piping that input to the db binary. The output is then checked against expected values.
-
-Acknowledgments
 
 This project is inspired by various educational resources on building simple databases. It serves as a hands-on exploration of low-level file and memory management, as well as tree data structures.
