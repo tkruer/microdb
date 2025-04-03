@@ -1,0 +1,21 @@
+Start testing: Apr 03 11:16 MST
+----------------------------------------------------------
+1/1 Testing: dbTests
+1/1 Test: dbTests
+Command: "/Users/tylerkruer/code/microdb/build/tests"
+Directory: /Users/tylerkruer/code/microdb/build
+"dbTests" start time: Apr 03 11:16 MST
+Output:
+----------------------------------------------------------
+===============================================================================
+All tests passed (3 assertions in 3 test cases)
+
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"dbTests" end time: Apr 03 11:16 MST
+"dbTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Apr 03 11:16 MST
